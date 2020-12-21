@@ -1,37 +1,32 @@
 function calculate_possible_moves(pawn) {
-    let pos = {};
+    let pos;
     let possibleMoves = [];
 
     // * PAWN * //
-    if (pawn.moveType == 'pawn') {
+    if (pawn.moveType === 'pawn') {
         // Pawn at any pos
         pos = { x: pawn.x, y: currentPlayer ? pawn.y + 1 : pawn.y - 1 };
 
-        if (check_if_pos_is_reachable(pos) == 'empty') {
-            pos.kill = null;
-            possibleMoves.push(pos);
+        if (check_if_pos_is_reachable(pos) === 'empty') {
+            possibleMoves.push({ ...pos, kill: null });
+
             // Pawn at start pos
             if (pawn.y == (currentPlayer ? 1 : 6)) {
                 pos = { x: pawn.x, y: currentPlayer ? pawn.y + 2 : pawn.y - 2 };
-                if (check_if_pos_is_reachable(pos) == 'empty') {
-                    pos.kill = null;
-                    possibleMoves.push(pos);
+                if (check_if_pos_is_reachable(pos) === 'empty') {
+                    possibleMoves.push({ ...pos, kill: null });
                 }
             }
         }
+
         // Check if pawn can do a kill
-        let posToCheck = [];
-        let countPosToCheck = 0;
-        let tempPos = { x: pawn.x + 1, y: currentPlayer ? pawn.y + 1 : pawn.y - 1 };
-        if (tempPos.x > -1 && tempPos.x < 8 && tempPos.y > -1 && tempPos.y < 8) {
-            posToCheck[countPosToCheck++] = grid[tempPos.y][tempPos.x];
-        }
-        tempPos = { x: pawn.x - 1, y: currentPlayer ? pawn.y + 1 : pawn.y - 1 };
-        if (tempPos.x > -1 && tempPos.x < 8 && tempPos.y > -1 && tempPos.y < 8) {
-            posToCheck[countPosToCheck++] = grid[tempPos.y][tempPos.x];
-        }
-        posToCheck.forEach((pos) => {
-            if (pos != null && pos.color == (currentPlayer ? 'white' : 'black')) {
+        pos = [
+            { x: pawn.x + 1, y: currentPlayer ? pawn.y + 1 : pawn.y - 1 },
+            { x: pawn.x - 1, y: currentPlayer ? pawn.y + 1 : pawn.y - 1 },
+        ];
+
+        pos.forEach((pos) => {
+            if (check_if_pos_is_reachable(pos) === 'has-pawn-to-kill') {
                 possibleMoves.push({ x: pos.x, y: pos.y, kill: pos });
             }
         });
@@ -312,11 +307,11 @@ function is_possible_moves(pos) {
     pos.forEach((pos) => {
         for (j = 0; j < pos.length; j++) {
             if (
-                check_if_pos_is_reachable(pos[j]) == 'empty' ||
-                check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill'
+                check_if_pos_is_reachable(pos[j]) === 'empty' ||
+                check_if_pos_is_reachable(pos[j]) === 'has-pawn-to-kill'
             ) {
                 pos[j].kill = null;
-                if (check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill') {
+                if (check_if_pos_is_reachable(pos[j]) === 'has-pawn-to-kill') {
                     pos[j].kill = grid[pos[j].y][pos[j].x];
                     possibleMoves.push(pos[j]);
                     break;
@@ -336,10 +331,10 @@ function check_if_pos_is_reachable(pos) {
     if (pos.y < 0 || pos.y > 7 || pos.x < 0 || pos.x > 7) {
         return 'out-of-board';
     }
-    if (grid[pos.y][pos.x] == null) {
+    if (grid[pos.y][pos.x] === null) {
         return 'empty';
     } else {
-        if (grid[pos.y][pos.x].color == (currentPlayer ? 'black' : 'white')) {
+        if (grid[pos.y][pos.x].color === (currentPlayer ? 'black' : 'white')) {
             return 'has-friendly-pawn';
         } else {
             return 'has-pawn-to-kill';
