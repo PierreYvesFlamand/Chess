@@ -1,7 +1,6 @@
 function calculate_possible_moves(pawn) {
     let pos = {};
     let possibleMoves = [];
-    let count = 0;
 
     // * PAWN * //
     if (pawn.moveType == 'pawn') {
@@ -10,13 +9,13 @@ function calculate_possible_moves(pawn) {
 
         if (check_if_pos_is_reachable(pos) == 'empty') {
             pos.kill = null;
-            possibleMoves[count++] = pos;
+            possibleMoves.push(pos);
             // Pawn at start pos
             if (pawn.y == (currentPlayer ? 1 : 6)) {
                 pos = { x: pawn.x, y: currentPlayer ? pawn.y + 2 : pawn.y - 2 };
                 if (check_if_pos_is_reachable(pos) == 'empty') {
                     pos.kill = null;
-                    possibleMoves[count++] = pos;
+                    possibleMoves.push(pos);
                 }
             }
         }
@@ -33,7 +32,7 @@ function calculate_possible_moves(pawn) {
         }
         posToCheck.forEach((pos) => {
             if (pos != null && pos.color == (currentPlayer ? 'white' : 'black')) {
-                possibleMoves[count++] = { x: pos.x, y: pos.y, kill: pos };
+                possibleMoves.push({ x: pos.x, y: pos.y, kill: pos });
             }
         });
     }
@@ -83,419 +82,175 @@ function calculate_possible_moves(pawn) {
             ],
         ];
 
-        pos.forEach((pos) => {
-            for (j = 0; j < pos.length; j++) {
-                if (
-                    check_if_pos_is_reachable(pos[j]) == 'empty' ||
-                    check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill'
-                ) {
-                    pos[j].kill = null;
-                    if (check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill') {
-                        pos[j].kill = grid[pos[j].y][pos[j].x];
-                        possibleMoves[count++] = pos[j];
-                        break;
-                    }
-                    possibleMoves[count++] = pos[j];
-                } else {
-                    break;
-                }
-            }
-        });
+        possibleMoves = is_possible_moves(pos);
     }
 
     // * KNIGHT * //
     if (pawn.moveType == 'knight') {
         pos = [
-            { x: pawn.x - 2, y: pawn.y - 1 },
-            { x: pawn.x - 2, y: pawn.y + 1 },
-            { x: pawn.x - 1, y: pawn.y - 2 },
-            { x: pawn.x - 1, y: pawn.y + 2 },
-            { x: pawn.x + 1, y: pawn.y - 2 },
-            { x: pawn.x + 1, y: pawn.y + 2 },
-            { x: pawn.x + 2, y: pawn.y - 1 },
-            { x: pawn.x + 2, y: pawn.y + 1 },
+            [{ x: pawn.x - 2, y: pawn.y - 1 }],
+            [{ x: pawn.x - 2, y: pawn.y + 1 }],
+            [{ x: pawn.x - 1, y: pawn.y - 2 }],
+            [{ x: pawn.x - 1, y: pawn.y + 2 }],
+            [{ x: pawn.x + 1, y: pawn.y - 2 }],
+            [{ x: pawn.x + 1, y: pawn.y + 2 }],
+            [{ x: pawn.x + 2, y: pawn.y - 1 }],
+            [{ x: pawn.x + 2, y: pawn.y + 1 }],
         ];
 
-        pos.forEach((pos) => {
-            if (
-                check_if_pos_is_reachable(pos) == 'empty' ||
-                check_if_pos_is_reachable(pos) == 'has-pawn-to-kill'
-            ) {
-                pos.kill = null;
-                if (check_if_pos_is_reachable(pos) == 'has-pawn-to-kill') {
-                    pos.kill = grid[pos.y][pos.x];
-                }
-                possibleMoves[count++] = pos;
-            }
-        });
+        possibleMoves = is_possible_moves(pos);
     }
+
     // * BISHOP * //
     if (pawn.moveType == 'bishop') {
-        // * top left
         pos = [
-            { x: pawn.x - 1, y: pawn.y - 1 },
-            { x: pawn.x - 2, y: pawn.y - 2 },
-            { x: pawn.x - 3, y: pawn.y - 3 },
-            { x: pawn.x - 4, y: pawn.y - 4 },
-            { x: pawn.x - 5, y: pawn.y - 5 },
-            { x: pawn.x - 6, y: pawn.y - 6 },
-            { x: pawn.x - 7, y: pawn.y - 7 },
+            [
+                // Top Left
+                { x: pawn.x - 1, y: pawn.y - 1 },
+                { x: pawn.x - 2, y: pawn.y - 2 },
+                { x: pawn.x - 3, y: pawn.y - 3 },
+                { x: pawn.x - 4, y: pawn.y - 4 },
+                { x: pawn.x - 5, y: pawn.y - 5 },
+                { x: pawn.x - 6, y: pawn.y - 6 },
+                { x: pawn.x - 7, y: pawn.y - 7 },
+            ],
+            [
+                // Top Right
+                { x: pawn.x + 1, y: pawn.y - 1 },
+                { x: pawn.x + 2, y: pawn.y - 2 },
+                { x: pawn.x + 3, y: pawn.y - 3 },
+                { x: pawn.x + 4, y: pawn.y - 4 },
+                { x: pawn.x + 5, y: pawn.y - 5 },
+                { x: pawn.x + 6, y: pawn.y - 6 },
+                { x: pawn.x + 7, y: pawn.y - 7 },
+            ],
+            [
+                // Bottom Left
+                { x: pawn.x - 1, y: pawn.y + 1 },
+                { x: pawn.x - 2, y: pawn.y + 2 },
+                { x: pawn.x - 3, y: pawn.y + 3 },
+                { x: pawn.x - 4, y: pawn.y + 4 },
+                { x: pawn.x - 5, y: pawn.y + 5 },
+                { x: pawn.x - 6, y: pawn.y + 6 },
+                { x: pawn.x - 7, y: pawn.y + 7 },
+            ],
+            [
+                // Bottom Right
+                { x: pawn.x + 1, y: pawn.y + 1 },
+                { x: pawn.x + 2, y: pawn.y + 2 },
+                { x: pawn.x + 3, y: pawn.y + 3 },
+                { x: pawn.x + 4, y: pawn.y + 4 },
+                { x: pawn.x + 5, y: pawn.y + 5 },
+                { x: pawn.x + 6, y: pawn.y + 6 },
+                { x: pawn.x + 7, y: pawn.y + 7 },
+            ],
         ];
 
-        for (j = 0; j < pos.length; j++) {
-            if (
-                check_if_pos_is_reachable(pos[j]) == 'empty' ||
-                check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill'
-            ) {
-                pos[j].kill = null;
-                if (check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill') {
-                    pos[j].kill = grid[pos[j].y][pos[j].x];
-                    possibleMoves[count++] = pos[j];
-                    break;
-                }
-                possibleMoves[count++] = pos[j];
-            } else {
-                break;
-            }
-        }
-
-        // * top right
-        pos = [
-            { x: pawn.x + 1, y: pawn.y - 1 },
-            { x: pawn.x + 2, y: pawn.y - 2 },
-            { x: pawn.x + 3, y: pawn.y - 3 },
-            { x: pawn.x + 4, y: pawn.y - 4 },
-            { x: pawn.x + 5, y: pawn.y - 5 },
-            { x: pawn.x + 6, y: pawn.y - 6 },
-            { x: pawn.x + 7, y: pawn.y - 7 },
-        ];
-
-        for (j = 0; j < pos.length; j++) {
-            if (
-                check_if_pos_is_reachable(pos[j]) == 'empty' ||
-                check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill'
-            ) {
-                pos[j].kill = null;
-                if (check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill') {
-                    pos[j].kill = grid[pos[j].y][pos[j].x];
-                    possibleMoves[count++] = pos[j];
-                    break;
-                }
-                possibleMoves[count++] = pos[j];
-            } else {
-                break;
-            }
-        }
-
-        // * bottom left
-        pos = [
-            { x: pawn.x - 1, y: pawn.y + 1 },
-            { x: pawn.x - 2, y: pawn.y + 2 },
-            { x: pawn.x - 3, y: pawn.y + 3 },
-            { x: pawn.x - 4, y: pawn.y + 4 },
-            { x: pawn.x - 5, y: pawn.y + 5 },
-            { x: pawn.x - 6, y: pawn.y + 6 },
-            { x: pawn.x - 7, y: pawn.y + 7 },
-        ];
-
-        for (j = 0; j < pos.length; j++) {
-            if (
-                check_if_pos_is_reachable(pos[j]) == 'empty' ||
-                check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill'
-            ) {
-                pos[j].kill = null;
-                if (check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill') {
-                    pos[j].kill = grid[pos[j].y][pos[j].x];
-                    possibleMoves[count++] = pos[j];
-                    break;
-                }
-                possibleMoves[count++] = pos[j];
-            } else {
-                break;
-            }
-        }
-
-        // * bottom right
-        pos = [
-            { x: pawn.x + 1, y: pawn.y + 1 },
-            { x: pawn.x + 2, y: pawn.y + 2 },
-            { x: pawn.x + 3, y: pawn.y + 3 },
-            { x: pawn.x + 4, y: pawn.y + 4 },
-            { x: pawn.x + 5, y: pawn.y + 5 },
-            { x: pawn.x + 6, y: pawn.y + 6 },
-            { x: pawn.x + 7, y: pawn.y + 7 },
-        ];
-
-        for (j = 0; j < pos.length; j++) {
-            if (
-                check_if_pos_is_reachable(pos[j]) == 'empty' ||
-                check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill'
-            ) {
-                pos[j].kill = null;
-                if (check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill') {
-                    pos[j].kill = grid[pos[j].y][pos[j].x];
-                    possibleMoves[count++] = pos[j];
-                    break;
-                }
-                possibleMoves[count++] = pos[j];
-            } else {
-                break;
-            }
-        }
+        possibleMoves = is_possible_moves(pos);
     }
 
     // * QUEEN * //
     if (pawn.moveType == 'queen') {
-        // * down
         pos = [
-            { x: pawn.x, y: pawn.y + 1 },
-            { x: pawn.x, y: pawn.y + 2 },
-            { x: pawn.x, y: pawn.y + 3 },
-            { x: pawn.x, y: pawn.y + 4 },
-            { x: pawn.x, y: pawn.y + 5 },
-            { x: pawn.x, y: pawn.y + 6 },
-            { x: pawn.x, y: pawn.y + 7 },
+            [
+                // Down
+                { x: pawn.x, y: pawn.y + 1 },
+                { x: pawn.x, y: pawn.y + 2 },
+                { x: pawn.x, y: pawn.y + 3 },
+                { x: pawn.x, y: pawn.y + 4 },
+                { x: pawn.x, y: pawn.y + 5 },
+                { x: pawn.x, y: pawn.y + 6 },
+                { x: pawn.x, y: pawn.y + 7 },
+            ],
+            [
+                // Up
+                { x: pawn.x, y: pawn.y - 1 },
+                { x: pawn.x, y: pawn.y - 2 },
+                { x: pawn.x, y: pawn.y - 3 },
+                { x: pawn.x, y: pawn.y - 4 },
+                { x: pawn.x, y: pawn.y - 5 },
+                { x: pawn.x, y: pawn.y - 6 },
+                { x: pawn.x, y: pawn.y - 7 },
+            ],
+            [
+                // Right
+                { x: pawn.x + 1, y: pawn.y },
+                { x: pawn.x + 2, y: pawn.y },
+                { x: pawn.x + 3, y: pawn.y },
+                { x: pawn.x + 4, y: pawn.y },
+                { x: pawn.x + 5, y: pawn.y },
+                { x: pawn.x + 6, y: pawn.y },
+                { x: pawn.x + 7, y: pawn.y },
+            ],
+            [
+                // Left
+                { x: pawn.x - 1, y: pawn.y },
+                { x: pawn.x - 2, y: pawn.y },
+                { x: pawn.x - 3, y: pawn.y },
+                { x: pawn.x - 4, y: pawn.y },
+                { x: pawn.x - 5, y: pawn.y },
+                { x: pawn.x - 6, y: pawn.y },
+                { x: pawn.x - 7, y: pawn.y },
+            ],
+            [
+                // Top Left
+                { x: pawn.x - 1, y: pawn.y - 1 },
+                { x: pawn.x - 2, y: pawn.y - 2 },
+                { x: pawn.x - 3, y: pawn.y - 3 },
+                { x: pawn.x - 4, y: pawn.y - 4 },
+                { x: pawn.x - 5, y: pawn.y - 5 },
+                { x: pawn.x - 6, y: pawn.y - 6 },
+                { x: pawn.x - 7, y: pawn.y - 7 },
+            ],
+            [
+                // Top Right
+                { x: pawn.x + 1, y: pawn.y - 1 },
+                { x: pawn.x + 2, y: pawn.y - 2 },
+                { x: pawn.x + 3, y: pawn.y - 3 },
+                { x: pawn.x + 4, y: pawn.y - 4 },
+                { x: pawn.x + 5, y: pawn.y - 5 },
+                { x: pawn.x + 6, y: pawn.y - 6 },
+                { x: pawn.x + 7, y: pawn.y - 7 },
+            ],
+            [
+                // Bottom Left
+                { x: pawn.x - 1, y: pawn.y + 1 },
+                { x: pawn.x - 2, y: pawn.y + 2 },
+                { x: pawn.x - 3, y: pawn.y + 3 },
+                { x: pawn.x - 4, y: pawn.y + 4 },
+                { x: pawn.x - 5, y: pawn.y + 5 },
+                { x: pawn.x - 6, y: pawn.y + 6 },
+                { x: pawn.x - 7, y: pawn.y + 7 },
+            ],
+            [
+                // Bottom Right
+                { x: pawn.x + 1, y: pawn.y + 1 },
+                { x: pawn.x + 2, y: pawn.y + 2 },
+                { x: pawn.x + 3, y: pawn.y + 3 },
+                { x: pawn.x + 4, y: pawn.y + 4 },
+                { x: pawn.x + 5, y: pawn.y + 5 },
+                { x: pawn.x + 6, y: pawn.y + 6 },
+                { x: pawn.x + 7, y: pawn.y + 7 },
+            ],
         ];
 
-        for (j = 0; j < pos.length; j++) {
-            if (
-                check_if_pos_is_reachable(pos[j]) == 'empty' ||
-                check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill'
-            ) {
-                pos[j].kill = null;
-                if (check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill') {
-                    pos[j].kill = grid[pos[j].y][pos[j].x];
-                    possibleMoves[count++] = pos[j];
-                    break;
-                }
-                possibleMoves[count++] = pos[j];
-            } else {
-                break;
-            }
-        }
-
-        // * up
-        pos = [
-            { x: pawn.x, y: pawn.y - 1 },
-            { x: pawn.x, y: pawn.y - 2 },
-            { x: pawn.x, y: pawn.y - 3 },
-            { x: pawn.x, y: pawn.y - 4 },
-            { x: pawn.x, y: pawn.y - 5 },
-            { x: pawn.x, y: pawn.y - 6 },
-            { x: pawn.x, y: pawn.y - 7 },
-        ];
-
-        for (j = 0; j < pos.length; j++) {
-            if (
-                check_if_pos_is_reachable(pos[j]) == 'empty' ||
-                check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill'
-            ) {
-                pos[j].kill = null;
-                if (check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill') {
-                    pos[j].kill = grid[pos[j].y][pos[j].x];
-                    possibleMoves[count++] = pos[j];
-                    break;
-                }
-                possibleMoves[count++] = pos[j];
-            } else {
-                break;
-            }
-        }
-
-        // * right
-        pos = [
-            { x: pawn.x + 1, y: pawn.y },
-            { x: pawn.x + 2, y: pawn.y },
-            { x: pawn.x + 3, y: pawn.y },
-            { x: pawn.x + 4, y: pawn.y },
-            { x: pawn.x + 5, y: pawn.y },
-            { x: pawn.x + 6, y: pawn.y },
-            { x: pawn.x + 7, y: pawn.y },
-        ];
-
-        for (j = 0; j < pos.length; j++) {
-            if (
-                check_if_pos_is_reachable(pos[j]) == 'empty' ||
-                check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill'
-            ) {
-                pos[j].kill = null;
-                if (check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill') {
-                    pos[j].kill = grid[pos[j].y][pos[j].x];
-                    possibleMoves[count++] = pos[j];
-                    break;
-                }
-                possibleMoves[count++] = pos[j];
-            } else {
-                break;
-            }
-        }
-
-        // * left
-        pos = [
-            { x: pawn.x - 1, y: pawn.y },
-            { x: pawn.x - 2, y: pawn.y },
-            { x: pawn.x - 3, y: pawn.y },
-            { x: pawn.x - 4, y: pawn.y },
-            { x: pawn.x - 5, y: pawn.y },
-            { x: pawn.x - 6, y: pawn.y },
-            { x: pawn.x - 7, y: pawn.y },
-        ];
-
-        for (j = 0; j < pos.length; j++) {
-            if (
-                check_if_pos_is_reachable(pos[j]) == 'empty' ||
-                check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill'
-            ) {
-                pos[j].kill = null;
-                if (check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill') {
-                    pos[j].kill = grid[pos[j].y][pos[j].x];
-                    possibleMoves[count++] = pos[j];
-                    break;
-                }
-                possibleMoves[count++] = pos[j];
-            } else {
-                break;
-            }
-        }
-
-        // * top left
-        pos = [
-            { x: pawn.x - 1, y: pawn.y - 1 },
-            { x: pawn.x - 2, y: pawn.y - 2 },
-            { x: pawn.x - 3, y: pawn.y - 3 },
-            { x: pawn.x - 4, y: pawn.y - 4 },
-            { x: pawn.x - 5, y: pawn.y - 5 },
-            { x: pawn.x - 6, y: pawn.y - 6 },
-            { x: pawn.x - 7, y: pawn.y - 7 },
-        ];
-
-        for (j = 0; j < pos.length; j++) {
-            if (
-                check_if_pos_is_reachable(pos[j]) == 'empty' ||
-                check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill'
-            ) {
-                pos[j].kill = null;
-                if (check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill') {
-                    pos[j].kill = grid[pos[j].y][pos[j].x];
-                    possibleMoves[count++] = pos[j];
-                    break;
-                }
-                possibleMoves[count++] = pos[j];
-            } else {
-                break;
-            }
-        }
-
-        // * top right
-        pos = [
-            { x: pawn.x + 1, y: pawn.y - 1 },
-            { x: pawn.x + 2, y: pawn.y - 2 },
-            { x: pawn.x + 3, y: pawn.y - 3 },
-            { x: pawn.x + 4, y: pawn.y - 4 },
-            { x: pawn.x + 5, y: pawn.y - 5 },
-            { x: pawn.x + 6, y: pawn.y - 6 },
-            { x: pawn.x + 7, y: pawn.y - 7 },
-        ];
-
-        for (j = 0; j < pos.length; j++) {
-            if (
-                check_if_pos_is_reachable(pos[j]) == 'empty' ||
-                check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill'
-            ) {
-                pos[j].kill = null;
-                if (check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill') {
-                    pos[j].kill = grid[pos[j].y][pos[j].x];
-                    possibleMoves[count++] = pos[j];
-                    break;
-                }
-                possibleMoves[count++] = pos[j];
-            } else {
-                break;
-            }
-        }
-
-        // * bottom left
-        pos = [
-            { x: pawn.x - 1, y: pawn.y + 1 },
-            { x: pawn.x - 2, y: pawn.y + 2 },
-            { x: pawn.x - 3, y: pawn.y + 3 },
-            { x: pawn.x - 4, y: pawn.y + 4 },
-            { x: pawn.x - 5, y: pawn.y + 5 },
-            { x: pawn.x - 6, y: pawn.y + 6 },
-            { x: pawn.x - 7, y: pawn.y + 7 },
-        ];
-
-        for (j = 0; j < pos.length; j++) {
-            if (
-                check_if_pos_is_reachable(pos[j]) == 'empty' ||
-                check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill'
-            ) {
-                pos[j].kill = null;
-                if (check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill') {
-                    pos[j].kill = grid[pos[j].y][pos[j].x];
-                    possibleMoves[count++] = pos[j];
-                    break;
-                }
-                possibleMoves[count++] = pos[j];
-            } else {
-                break;
-            }
-        }
-
-        // * bottom right
-        pos = [
-            { x: pawn.x + 1, y: pawn.y + 1 },
-            { x: pawn.x + 2, y: pawn.y + 2 },
-            { x: pawn.x + 3, y: pawn.y + 3 },
-            { x: pawn.x + 4, y: pawn.y + 4 },
-            { x: pawn.x + 5, y: pawn.y + 5 },
-            { x: pawn.x + 6, y: pawn.y + 6 },
-            { x: pawn.x + 7, y: pawn.y + 7 },
-        ];
-
-        for (j = 0; j < pos.length; j++) {
-            if (
-                check_if_pos_is_reachable(pos[j]) == 'empty' ||
-                check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill'
-            ) {
-                pos[j].kill = null;
-                if (check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill') {
-                    pos[j].kill = grid[pos[j].y][pos[j].x];
-                    possibleMoves[count++] = pos[j];
-                    break;
-                }
-                possibleMoves[count++] = pos[j];
-            } else {
-                break;
-            }
-        }
+        possibleMoves = is_possible_moves(pos);
     }
 
     // * KING * //
     if (pawn.moveType == 'king') {
         pos = [
-            { x: pawn.x - 1, y: pawn.y - 1 },
-            { x: pawn.x - 1, y: pawn.y },
-            { x: pawn.x - 1, y: pawn.y + 1 },
-            { x: pawn.x, y: pawn.y - 1 },
-            { x: pawn.x, y: pawn.y + 1 },
-            { x: pawn.x + 1, y: pawn.y - 1 },
-            { x: pawn.x + 1, y: pawn.y },
-            { x: pawn.x + 1, y: pawn.y + 1 },
+            [{ x: pawn.x - 1, y: pawn.y - 1 }],
+            [{ x: pawn.x - 1, y: pawn.y }],
+            [{ x: pawn.x - 1, y: pawn.y + 1 }],
+            [{ x: pawn.x, y: pawn.y - 1 }],
+            [{ x: pawn.x, y: pawn.y + 1 }],
+            [{ x: pawn.x + 1, y: pawn.y - 1 }],
+            [{ x: pawn.x + 1, y: pawn.y }],
+            [{ x: pawn.x + 1, y: pawn.y + 1 }],
         ];
 
-        pos.forEach((pos) => {
-            if (
-                check_if_pos_is_reachable(pos) == 'empty' ||
-                check_if_pos_is_reachable(pos) == 'has-pawn-to-kill'
-            ) {
-                pos.kill = null;
-                if (check_if_pos_is_reachable(pos) == 'has-pawn-to-kill') {
-                    pos.kill = grid[pos.y][pos.x];
-                }
-                possibleMoves[count++] = pos;
-            }
-        });
+        possibleMoves = is_possible_moves(pos);
 
         // Check roque
         if (pawn.first_move) {
@@ -507,7 +262,7 @@ function calculate_possible_moves(pawn) {
                         check_if_pos_is_reachable({ x: 5, y: 7 }) === 'empty' &&
                         check_if_pos_is_reachable({ x: 6, y: 7 }) === 'empty'
                     ) {
-                        possibleMoves[count++] = { x: 6, y: 7, roque: 3 };
+                        possibleMoves.push({ x: 6, y: 7, roque: 3 });
                     }
                 }
 
@@ -518,7 +273,7 @@ function calculate_possible_moves(pawn) {
                         check_if_pos_is_reachable({ x: 2, y: 7 }) === 'empty' &&
                         check_if_pos_is_reachable({ x: 3, y: 7 }) === 'empty'
                     ) {
-                        possibleMoves[count++] = { x: 2, y: 7, roque: 2 };
+                        possibleMoves.push({ x: 2, y: 7, roque: 2 });
                     }
                 }
             }
@@ -531,7 +286,7 @@ function calculate_possible_moves(pawn) {
                         check_if_pos_is_reachable({ x: 2, y: 0 }) === 'empty' &&
                         check_if_pos_is_reachable({ x: 3, y: 0 }) === 'empty'
                     ) {
-                        possibleMoves[count++] = { x: 2, y: 0, roque: 0 };
+                        possibleMoves.push({ x: 2, y: 0, roque: 0 });
                     }
                 }
 
@@ -541,12 +296,38 @@ function calculate_possible_moves(pawn) {
                         check_if_pos_is_reachable({ x: 5, y: 0 }) === 'empty' &&
                         check_if_pos_is_reachable({ x: 6, y: 0 }) === 'empty'
                     ) {
-                        possibleMoves[count++] = { x: 6, y: 0, roque: 1 };
+                        possibleMoves.push({ x: 6, y: 0, roque: 1 });
                     }
                 }
             }
         }
     }
+    return possibleMoves;
+}
+
+// Calculate if it's possible move
+function is_possible_moves(pos) {
+    const possibleMoves = [];
+
+    pos.forEach((pos) => {
+        for (j = 0; j < pos.length; j++) {
+            if (
+                check_if_pos_is_reachable(pos[j]) == 'empty' ||
+                check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill'
+            ) {
+                pos[j].kill = null;
+                if (check_if_pos_is_reachable(pos[j]) == 'has-pawn-to-kill') {
+                    pos[j].kill = grid[pos[j].y][pos[j].x];
+                    possibleMoves.push(pos[j]);
+                    break;
+                }
+                possibleMoves.push(pos[j]);
+            } else {
+                break;
+            }
+        }
+    });
+
     return possibleMoves;
 }
 
