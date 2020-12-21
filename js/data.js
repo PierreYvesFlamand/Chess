@@ -1,7 +1,6 @@
-var isBlackPlayer = 0;
-var currentPlayer = 0;
+let currentPlayer = 0;
 
-var Pawns = [
+const Pawns = [
     (white = [
         (pawn = [
             {
@@ -262,13 +261,49 @@ var Pawns = [
     ]),
 ];
 
-var grid = [
-    [Pawns[1][1][0], Pawns[1][2][0], Pawns[1][3][0], Pawns[1][4][0], Pawns[1][5][0], Pawns[1][3][1], Pawns[1][2][1], Pawns[1][1][1]],
-    [Pawns[1][0][0], Pawns[1][0][1], Pawns[1][0][2], Pawns[1][0][3], Pawns[1][0][4], Pawns[1][0][5], Pawns[1][0][6], Pawns[1][0][7]],
+const grid = [
+    [
+        Pawns[1][1][0],
+        Pawns[1][2][0],
+        Pawns[1][3][0],
+        Pawns[1][4][0],
+        Pawns[1][5][0],
+        Pawns[1][3][1],
+        Pawns[1][2][1],
+        Pawns[1][1][1],
+    ],
+    [
+        Pawns[1][0][0],
+        Pawns[1][0][1],
+        Pawns[1][0][2],
+        Pawns[1][0][3],
+        Pawns[1][0][4],
+        Pawns[1][0][5],
+        Pawns[1][0][6],
+        Pawns[1][0][7],
+    ],
     [null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null],
-    [Pawns[0][0][0], Pawns[0][0][1], Pawns[0][0][2], Pawns[0][0][3], Pawns[0][0][4], Pawns[0][0][5], Pawns[0][0][6], Pawns[0][0][7]],
-    [Pawns[0][1][0], Pawns[0][2][0], Pawns[0][3][0], Pawns[0][4][0], Pawns[0][5][0], Pawns[0][3][1], Pawns[0][2][1], Pawns[0][1][1]],
+    [
+        Pawns[0][0][0],
+        Pawns[0][0][1],
+        Pawns[0][0][2],
+        Pawns[0][0][3],
+        Pawns[0][0][4],
+        Pawns[0][0][5],
+        Pawns[0][0][6],
+        Pawns[0][0][7],
+    ],
+    [
+        Pawns[0][1][0],
+        Pawns[0][2][0],
+        Pawns[0][3][0],
+        Pawns[0][4][0],
+        Pawns[0][5][0],
+        Pawns[0][3][1],
+        Pawns[0][2][1],
+        Pawns[0][1][1],
+    ],
 ];
