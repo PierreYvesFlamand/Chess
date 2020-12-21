@@ -1,6 +1,6 @@
 # Chess
 
-## How to play
+## How to [play](https://pierreyvesflamand.github.io/Chess/)
 
 -   Hover a pawn to know witch move it can performs
 -   Click a pawn and then a square to move the pawn
