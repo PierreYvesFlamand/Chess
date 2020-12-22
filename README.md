@@ -18,6 +18,8 @@ Fan of boardgame, I wanted to recreate a Chess game from scratch with vanilla JS
 
 This is one of my first JS work.
 
+Icons come from [Font Awesome](https://fontawesome.com/).
+
 **My plan :**
 
 -   Store pawns data / position in a big Object
