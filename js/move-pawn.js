@@ -55,13 +55,11 @@ function move_pawn(pawnToMove, moveToDo) {
 
         // Fast reload for now
         if (moveToDo.kill.id == 'king-w') {
-            alert('BLACK PLAYER WIN');
-            location.reload();
+            toggleModal({ modal: 'end', winner: 'Black' });
         }
 
         if (moveToDo.kill.id == 'king-b') {
-            alert('WHITE PLAYER WIN');
-            location.reload();
+            toggleModal({ modal: 'end', winner: 'White' });
         }
     }
 

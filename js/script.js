@@ -1,38 +1,42 @@
 document.onreadystatechange = () => {
     if (document.readyState === 'complete') {
         document.querySelector('.modal').style.display = 'none';
-        toggleModal('start');
+        toggleModal({ modal: 'start' });
     }
 };
 
-const toggleModal = (modal = null) => {
+const toggleModal = ({ modal = null, winner = null }) => {
     const modalDiv = document.querySelector('.modal');
     modalDiv.style.display = modalDiv.style.display === 'none' ? 'flex' : 'none';
 
-    console.log(modals[modal]);
+    const modals = {
+        start: `
+            <h1>Chess</h1>
+            <h2>How to play</h2>
+            <ul>
+                <li>Hover a pawn to know witch move it can performs</li>
+                <li>Click a pawn and then a square to move the pawn</li>
+            </ul>
+            <h2>Rules availables</h2>
+            <ul>
+                <li>Pawn promotion (reach ennemy last first row with a pawn to promote it)</li>
+                <li>Castling (click the king to perform it)</li>
+            </ul>
+            <button onclick="start_game()">Start the game</button>
+        `,
+
+        end: `
+            <h1>Game end</h1>
+            <h2>${winner} player wins the game</h2>
+            <button onclick="location.reload()">Play again</button>
+        `,
+    };
 
     document.querySelector('.modal-card').innerHTML = modal ? modals[modal] : '';
 };
 
-const modals = {
-    start: `
-        <h1>Chess</h1>
-        <h2>How to play</h2>
-        <ul>
-            <li>Hover a pawn to know witch move it can performs</li>
-            <li>Click a pawn and then a square to move the pawn</li>
-        </ul>
-        <h2>Rules availables</h2>
-        <ul>
-            <li>Pawn promotion (reach ennemy last first row with a pawn to promote it)</li>
-            <li>Castling (click the king to perform it)</li>
-        </ul>
-        <button onclick="start_game()">Start the game</button>
-    `,
-};
-
 function start_game() {
-    toggleModal();
+    toggleModal({});
     pawn_sellection(true);
 }
 
