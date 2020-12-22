@@ -14,7 +14,7 @@ function toggleModal({ modal = null, winner = null, pawnToPromote = null }) {
             <h1>Chess</h1>
             <h2>How to play</h2>
             <ul>
-                <li>Hover a pawn to know witch move it can performs</li>
+                <li>Hover a pawn to know which move it can performs</li>
                 <li>Click a pawn and then a square to move the pawn</li>
             </ul>
             <h2>Rules availables</h2>
