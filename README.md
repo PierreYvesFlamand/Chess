@@ -10,7 +10,7 @@ Click [here](https://pierreyvesflamand.github.io/Chess/) to try the game.
 **Rules availables**
 
 -   Pawn promotion (reach ennemy last first row with a pawn to promote it)
--   Castling
+-   Castling (click the king to perform it)
 
 ## About
 

@@ -234,7 +234,7 @@ function king_logic(pawn) {
 
     possibleMoves = is_possible_moves(pos);
 
-    // Check roque
+    // Check Castle
     if (pawn.first_move) {
         // White
         if (currentPlayer === 0) {
@@ -244,7 +244,7 @@ function king_logic(pawn) {
                     check_if_pos_is_reachable({ x: 5, y: 7 }) === 'empty' &&
                     check_if_pos_is_reachable({ x: 6, y: 7 }) === 'empty'
                 ) {
-                    possibleMoves.push({ x: 6, y: 7, roque: 3 });
+                    possibleMoves.push({ x: 6, y: 7, castle: 3 });
                 }
             }
 
@@ -255,7 +255,7 @@ function king_logic(pawn) {
                     check_if_pos_is_reachable({ x: 2, y: 7 }) === 'empty' &&
                     check_if_pos_is_reachable({ x: 3, y: 7 }) === 'empty'
                 ) {
-                    possibleMoves.push({ x: 2, y: 7, roque: 2 });
+                    possibleMoves.push({ x: 2, y: 7, castle: 2 });
                 }
             }
         }
@@ -268,7 +268,7 @@ function king_logic(pawn) {
                     check_if_pos_is_reachable({ x: 2, y: 0 }) === 'empty' &&
                     check_if_pos_is_reachable({ x: 3, y: 0 }) === 'empty'
                 ) {
-                    possibleMoves.push({ x: 2, y: 0, roque: 0 });
+                    possibleMoves.push({ x: 2, y: 0, castle: 0 });
                 }
             }
 
@@ -278,7 +278,7 @@ function king_logic(pawn) {
                     check_if_pos_is_reachable({ x: 5, y: 0 }) === 'empty' &&
                     check_if_pos_is_reachable({ x: 6, y: 0 }) === 'empty'
                 ) {
-                    possibleMoves.push({ x: 6, y: 0, roque: 1 });
+                    possibleMoves.push({ x: 6, y: 0, castle: 1 });
                 }
             }
         }

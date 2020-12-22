@@ -109,56 +109,56 @@ function move_pawn(pawnToMove, moveToDo) {
     }
 
     // Castling if needed
-    if (moveToDo.roque !== undefined) {
-        let roque_move = {};
+    if (moveToDo.castle !== undefined) {
+        let castle_move = {};
 
-        switch (moveToDo.roque) {
+        switch (moveToDo.castle) {
             case 0:
-                roque_move.i = 1;
-                roque_move.j = 1;
-                roque_move.k = 0;
+                castle_move.i = 1;
+                castle_move.j = 1;
+                castle_move.k = 0;
 
-                roque_move.x = 0;
-                roque_move.y = 0;
+                castle_move.x = 0;
+                castle_move.y = 0;
 
-                roque_move.x_to_do = 3;
-                roque_move.y_to_do = 0;
+                castle_move.x_to_do = 3;
+                castle_move.y_to_do = 0;
                 break;
 
             case 1:
-                roque_move.i = 1;
-                roque_move.j = 1;
-                roque_move.k = 1;
+                castle_move.i = 1;
+                castle_move.j = 1;
+                castle_move.k = 1;
 
-                roque_move.x = 7;
-                roque_move.y = 0;
+                castle_move.x = 7;
+                castle_move.y = 0;
 
-                roque_move.x_to_do = 5;
-                roque_move.y_to_do = 0;
+                castle_move.x_to_do = 5;
+                castle_move.y_to_do = 0;
                 break;
 
             case 2:
-                roque_move.i = 0;
-                roque_move.j = 1;
-                roque_move.k = 0;
+                castle_move.i = 0;
+                castle_move.j = 1;
+                castle_move.k = 0;
 
-                roque_move.x = 0;
-                roque_move.y = 7;
+                castle_move.x = 0;
+                castle_move.y = 7;
 
-                roque_move.x_to_do = 3;
-                roque_move.y_to_do = 7;
+                castle_move.x_to_do = 3;
+                castle_move.y_to_do = 7;
                 break;
 
             case 3:
-                roque_move.i = 0;
-                roque_move.j = 1;
-                roque_move.k = 1;
+                castle_move.i = 0;
+                castle_move.j = 1;
+                castle_move.k = 1;
 
-                roque_move.x = 7;
-                roque_move.y = 7;
+                castle_move.x = 7;
+                castle_move.y = 7;
 
-                roque_move.x_to_do = 5;
-                roque_move.y_to_do = 7;
+                castle_move.x_to_do = 5;
+                castle_move.y_to_do = 7;
                 break;
 
             default:
@@ -166,15 +166,15 @@ function move_pawn(pawnToMove, moveToDo) {
                 break;
         }
 
-        Pawns[roque_move.i][roque_move.j][roque_move.k].first_move = false;
-        grid[roque_move.y][roque_move.x] = null;
-        grid[roque_move.y_to_do][roque_move.x_to_do] = Pawns[roque_move.i][roque_move.j][roque_move.k];
+        Pawns[castle_move.i][castle_move.j][castle_move.k].first_move = false;
+        grid[castle_move.y][castle_move.x] = null;
+        grid[castle_move.y_to_do][castle_move.x_to_do] = Pawns[castle_move.i][castle_move.j][castle_move.k];
 
-        Pawns[roque_move.i][roque_move.j][roque_move.k].x = roque_move.x_to_do;
-        Pawns[roque_move.i][roque_move.j][roque_move.k].y = roque_move.y_to_do;
+        Pawns[castle_move.i][castle_move.j][castle_move.k].x = castle_move.x_to_do;
+        Pawns[castle_move.i][castle_move.j][castle_move.k].y = castle_move.y_to_do;
 
-        document.getElementById(Pawns[roque_move.i][roque_move.j][roque_move.k].id).style.gridArea =
-            get_letter(roque_move.y_to_do) + (roque_move.x_to_do + 1);
+        document.getElementById(Pawns[castle_move.i][castle_move.j][castle_move.k].id).style.gridArea =
+            get_letter(castle_move.y_to_do) + (castle_move.x_to_do + 1);
     }
 
     // Next turn
