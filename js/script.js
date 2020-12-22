@@ -5,7 +5,7 @@ document.onreadystatechange = () => {
     }
 };
 
-const toggleModal = ({ modal = null, winner = null }) => {
+function toggleModal({ modal = null, winner = null, pawnToPromote = null }) {
     const modalDiv = document.querySelector('.modal');
     modalDiv.style.display = modalDiv.style.display === 'none' ? 'flex' : 'none';
 
@@ -26,14 +26,42 @@ const toggleModal = ({ modal = null, winner = null }) => {
         `,
 
         end: `
-            <h1>Game end</h1>
+            <h1>Game end !</h1>
             <h2>${winner} player wins the game</h2>
             <button onclick="location.reload()">Play again</button>
+        `,
+
+        promotion: `
+            <h1>Pawn promotion !</h1>
+            <h2>Choose your promotion</h2>
+            <button id="promot-q">Queen</button>
+            <button id="promot-k">Knight</button>
+            <button id="promot-b">Bishop</button>
+            <button id="promot-r">Rook</button>
         `,
     };
 
     document.querySelector('.modal-card').innerHTML = modal ? modals[modal] : '';
-};
+
+    if (pawnToPromote) {
+        document.querySelector('#promot-q').addEventListener('click', () => {
+            pawn_promotion(pawnToPromote, 'queen');
+            toggleModal({});
+        });
+        document.querySelector('#promot-k').addEventListener('click', () => {
+            pawn_promotion(pawnToPromote, 'knight');
+            toggleModal({});
+        });
+        document.querySelector('#promot-b').addEventListener('click', () => {
+            pawn_promotion(pawnToPromote, 'bishop');
+            toggleModal({});
+        });
+        document.querySelector('#promot-r').addEventListener('click', () => {
+            pawn_promotion(pawnToPromote, 'rook');
+            toggleModal({});
+        });
+    }
+}
 
 function start_game() {
     toggleModal({});

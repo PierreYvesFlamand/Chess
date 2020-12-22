@@ -65,45 +65,7 @@ function move_pawn(pawnToMove, moveToDo) {
 
     // Promote Pawn if needed
     if (pawnToMove.moveType === 'pawn' && moveToDo.y == (currentPlayer ? 7 : 0)) {
-        let type;
-        do {
-            type = parseInt(prompt('Promotion du pion !\n\n1 : Reine\n2 : Cavalier\n3 : Fou\n4 : Tour'));
-        } while (type < 1 || type > 4 || isNaN(type));
-
-        switch (type) {
-            case 1:
-                type = 'queen';
-                break;
-
-            case 2:
-                type = 'knight';
-                break;
-
-            case 3:
-                type = 'bishop';
-                break;
-
-            case 4:
-                type = 'rook';
-                break;
-
-            default:
-                console.log('Switch error');
-                break;
-        }
-        document.getElementById(pawnToMove.id).innerHTML = '<i class="fas fa-chess-' + type + '"></i>';
-
-        for (j = 0; j < Pawns[currentPlayer][0].length; j++) {
-            const pawn = Pawns[currentPlayer][0][j];
-
-            if (pawn.id === pawnToMove.id) {
-                pawn.moveType = type;
-
-                // Sneak break because promotion id done
-                i = Pawns[currentPlayer][0].length;
-                break;
-            }
-        }
+        toggleModal({ modal: 'promotion', pawnToPromote: pawnToMove });
     }
 
     // Castling if needed
@@ -182,4 +144,21 @@ function move_pawn(pawnToMove, moveToDo) {
 function get_letter(value) {
     var letter = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
     return letter[value];
+}
+
+function pawn_promotion(pawnToPromote, type) {
+    const promotPlayer = currentPlayer ? 0 : 1;
+    document.getElementById(pawnToPromote.id).innerHTML = '<i class="fas fa-chess-' + type + '"></i>';
+
+    for (let i = 0; i < Pawns[promotPlayer][0].length; i++) {
+        const pawn = Pawns[promotPlayer][0][i];
+
+        if (pawn.id === pawnToPromote.id) {
+            pawn.moveType = type;
+
+            // Sneak break because promotion id done
+            i = Pawns[promotPlayer][0].length;
+            break;
+        }
+    }
 }
