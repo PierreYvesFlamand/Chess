@@ -16,24 +16,24 @@ function pawn_sellection(mode) {
             const possible_moves = calculate_possible_moves(pawn);
 
             if (possible_moves.length != 0) {
-                const elem = document.getElementById(pawn.id);
-                elem.classList.toggle('is-askSelection');
+                const node = document.getElementById(pawn.id);
+                node.classList.toggle('is-askSelection');
 
                 // Mode is used to switch from show/hide possible moves
                 if (mode) {
-                    elem.addEventListener('click', function () {
+                    node.addEventListener('click', function () {
                         ask_possible_moves(pawn, possible_moves, true);
                         pawn_sellection(false);
                     });
-                    elem.addEventListener('mouseover', function () {
+                    node.addEventListener('mouseover', function () {
                         show_possible_moves(possible_moves, true);
                     });
-                    elem.addEventListener('mouseout', function () {
+                    node.addEventListener('mouseout', function () {
                         show_possible_moves(possible_moves, false);
                     });
                 } else {
-                    const elemClone = elem.cloneNode(true);
-                    elem.parentNode.replaceChild(elemClone, elem);
+                    const nodeClone = node.cloneNode(true);
+                    node.parentNode.replaceChild(nodeClone, node);
                 }
             }
         });
@@ -43,11 +43,11 @@ function pawn_sellection(mode) {
 // Show all possible moves when hovering
 function show_possible_moves(moves, mode) {
     moves.forEach((move) => {
-        var elem = document.getElementById('pos-' + move.x + '-' + move.y);
-        elem.classList.toggle('is-possible-move');
+        const node = document.getElementById('pos-' + move.x + '-' + move.y);
+        node.classList.toggle('is-possible-move');
         if (!mode) {
-            var elemClone = elem.cloneNode(true);
-            elem.parentNode.replaceChild(elemClone, elem);
+            const nodeClone = node.cloneNode(true);
+            node.parentNode.replaceChild(nodeClone, node);
         }
     });
 }
@@ -56,17 +56,18 @@ function show_possible_moves(moves, mode) {
 function ask_possible_moves(pawn, moves, mode) {
     document.getElementById(pawn.id).classList.toggle('is-askedSelection');
     document.getElementById('grid').classList.toggle('grid-disable');
+
     moves.forEach((move) => {
-        var elem = document.getElementById('pos-' + move.x + '-' + move.y);
+        const node = document.getElementById('pos-' + move.x + '-' + move.y);
         if (mode) {
-            elem.addEventListener('click', function () {
+            node.addEventListener('click', function () {
                 ask_possible_moves(pawn, moves, false);
                 move_pawn(pawn, move);
             });
         } else {
-            elem.classList.toggle('is-possible-move');
-            var elemClone = elem.cloneNode(true);
-            elem.parentNode.replaceChild(elemClone, elem);
+            node.classList.toggle('is-possible-move');
+            const nodeClone = node.cloneNode(true);
+            node.parentNode.replaceChild(nodeClone, node);
         }
     });
 }
