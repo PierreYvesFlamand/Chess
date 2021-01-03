@@ -1,3 +1,6 @@
+@import './variables';
+@import './modal';
+
 * {
     box-sizing: border-box;
 }
@@ -5,13 +8,11 @@
 body {
     margin: 0;
     display: flex;
-    background: lightslategray;
+    background: $bg-color;
     height: 100vh;
     justify-content: center;
     align-items: center;
 }
-
-@import './modal';
 
 .gameboard {
     position: relative;
@@ -26,13 +27,13 @@ body {
 .w-gameboard,
 .b-gameboard {
     position: relative;
-    background: #d6a259;
+    background: $gameB-light;
     width: 100%;
     height: 100%;
 }
 
 .b-gameboard {
-    background: #a05924;
+    background: $gameB-dark;
 }
 
 /** GRID **/
@@ -59,8 +60,8 @@ body {
 /** PAWNS **/
 .pawns-w,
 .pawns-b {
-    background: white;
-    color: black;
+    background: $player-light;
+    color: $player-dark;
     border-radius: 50%;
     font-size: 2.3rem;
     width: 70%;
@@ -74,8 +75,8 @@ body {
 }
 
 .pawns-b {
-    background: black;
-    color: white;
+    background: $player-dark;
+    color: $player-light;
 }
 
 /** WHITE PAWNS **/
@@ -180,25 +181,25 @@ body {
 
 /** GAME **/
 .is-askSelection {
-    border: 4px solid red;
+    border: 4px solid $possible-move;
     cursor: pointer;
 
     &:hover {
-        border: 4px solid chartreuse;
+        border: 4px solid $possible-move-hover;
     }
 }
 
 .is-askedSelection {
-    border: 4px solid chartreuse;
+    border: 4px solid $possible-move-hover;
 }
 
 /** POSSIBLE MOVE **/
 .is-possible-move {
-    border: 6px dashed red;
+    border: 6px dashed $possible-move;
     cursor: pointer;
 
     &:hover {
-        border: 6px dashed chartreuse;
+        border: 6px dashed $possible-move-hover;
     }
 }
 

@@ -14,7 +14,7 @@
 .modal-card {
     width: max-content;
     height: max-content;
-    background-color: rgb(245, 245, 245);
+    background-color: $bg-modal;
     border-radius: 5px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.911);
     padding: 10px 25px 25px;
@@ -29,8 +29,8 @@
     button {
         border: 0;
         border-radius: 8px;
-        background: black;
-        color: white;
+        background: $bg-btn-modal;
+        color: $color-btn-modal;
         padding: 10px 20px;
         font-size: 1.1rem;
         width: max-content;
