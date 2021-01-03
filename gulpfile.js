@@ -1,8 +1,8 @@
 const gulp = require('gulp'),
     htmlmin = require('gulp-htmlmin'),
     sass = require('gulp-sass'),
+    minify = require('gulp-minify'),
     sourcemaps = require('gulp-sourcemaps'),
-    webpack = require('webpack-stream'),
     browserSync = require('browser-sync').create();
 
 function pipeHtml() {
@@ -25,14 +25,13 @@ function pipeSass() {
 
 function pipeJs() {
     return gulp
-        .src('./src/js/script.js')
+        .src('./src/js/**/*.js')
         .pipe(
-            webpack({
-                mode: 'production',
-                devtool: 'source-map',
-                output: {
-                    filename: 'script.js',
+            minify({
+                ext: {
+                    min: '.js',
                 },
+                noSource: true,
             })
         )
         .pipe(gulp.dest('./build/js'));

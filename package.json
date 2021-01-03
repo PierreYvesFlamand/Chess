@@ -1,5 +1,5 @@
 {
-    "name": "environement",
+    "name": "chess",
     "version": "1.0.0",
     "description": "",
     "main": "gulpfile.js",
@@ -13,8 +13,8 @@
         "browser-sync": "^2.26.13",
         "gulp": "^4.0.2",
         "gulp-htmlmin": "^5.0.1",
+        "gulp-minify": "^3.1.0",
         "gulp-sass": "^4.1.0",
-        "gulp-sourcemaps": "^3.0.0",
-        "webpack-stream": "^6.1.1"
+        "gulp-sourcemaps": "^3.0.0"
     }
 }

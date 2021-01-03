@@ -1,11 +1,11 @@
 # Chess
 
-## How to [play](https://pierreyvesflamand.github.io/Chess/)
+## How to [play](https://pierreyvesflamand.github.io/Chess/build)
 
 -   Hover a pawn to know which move it can performs
 -   Click a pawn and then a square to move the pawn
 
-Click [here](https://pierreyvesflamand.github.io/Chess/) to try the game.
+Click [here](https://pierreyvesflamand.github.io/Chess/build) to try the game.
 
 **Rules availables**
 
