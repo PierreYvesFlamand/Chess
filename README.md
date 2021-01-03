@@ -25,3 +25,9 @@ Icons come from [Font Awesome](https://fontawesome.com/).
 -   Store pawns data / position in a big Object
 -   Store the game board in an Array
 -   Use the CSS display grid and grid-template-areas to place the pawns
+
+## How to run locally
+
+1. **npm install**
+    1. **npm run start** - Run a local server
+    2. **npm run build** - Build a production build
