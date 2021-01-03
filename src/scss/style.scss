@@ -11,52 +11,7 @@ body {
     align-items: center;
 }
 
-.modal {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 99;
-    background-color: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-card {
-    width: max-content;
-    height: max-content;
-    background-color: rgb(245, 245, 245);
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.911);
-    padding: 10px 25px 25px;
-    display: flex;
-    flex-direction: column;
-}
-
-.modal-card h1,
-.modal-card h2 {
-    text-align: center;
-}
-
-.modal-card button {
-    border: 0;
-    border-radius: 8px;
-    background: black;
-    color: white;
-    padding: 10px 20px;
-    font-size: 1.1rem;
-    width: max-content;
-    margin: 15px auto 0;
-    cursor: pointer;
-
-    transition: transform 250ms ease;
-}
-
-.modal-card button:hover {
-    transform: scale(1.04);
-}
+@import './modal';
 
 .gameboard {
     position: relative;
@@ -105,9 +60,9 @@ body {
 .pawns-w,
 .pawns-b {
     background: white;
+    color: black;
     border-radius: 50%;
     font-size: 2.3rem;
-    color: black;
     width: 70%;
     height: 70%;
     justify-self: center;
@@ -224,15 +179,13 @@ body {
 }
 
 /** GAME **/
-
 .is-askSelection {
     border: 4px solid red;
     cursor: pointer;
-}
 
-.is-askSelection:hover {
-    border: 4px solid chartreuse;
-    cursor: pointer;
+    &:hover {
+        border: 4px solid chartreuse;
+    }
 }
 
 .is-askedSelection {
@@ -240,17 +193,13 @@ body {
 }
 
 /** POSSIBLE MOVE **/
-
 .is-possible-move {
-    box-sizing: border-box;
     border: 6px dashed red;
     cursor: pointer;
-}
 
-.is-possible-move:hover {
-    box-sizing: border-box;
-    border: 6px dashed chartreuse;
-    cursor: pointer;
+    &:hover {
+        border: 6px dashed chartreuse;
+    }
 }
 
 .grid-disable {
