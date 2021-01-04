@@ -26,6 +26,7 @@ function pipeSass() {
 function pipeJs() {
     return gulp
         .src('./src/js/**/*.js')
+        .pipe(sourcemaps.init())
         .pipe(
             minify({
                 ext: {
@@ -34,6 +35,7 @@ function pipeJs() {
                 noSource: true,
             })
         )
+        .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest('./build/js'));
 }
 
